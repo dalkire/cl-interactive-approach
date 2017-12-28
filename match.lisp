@@ -20,3 +20,11 @@
   "Returns T if its two arguments are eql or if either of them is a variable as recognized by variablep."
   (or (eql e1 e2)
       (or (variablep e1) (variablep e2))))
+
+;;; 14.7 In your match file, define the function dont-care to return True
+;;; if its argument is a question-mark symbol and NIL in any other case.
+;;; You might want to review the discussion of isqmark that starts on page
+;;; 63. Make sure that (dont-care 5) returns NIL rather than causing an error.
+(defun dont-care (s)
+  "Returns T if its argument is a question-mark symbol and NIL in any other case."
+  (and (symbolp s) (eql s '?)))
