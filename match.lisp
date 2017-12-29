@@ -37,3 +37,15 @@
 (defun dont-care (s)
   "Returns T if its argument is a question-mark symbol and NIL in any other case."
   (and (symbolp s) (eql s '?)))
+
+;;; 16.15 In your match file (see Exercise 14.8), define the function
+;;; (matchlelt l1 l2) to be like equal-lelt except to consider the symbol ?
+;;; (recognized by dont-care) to be eql anything. For example,
+;;; (matchlelt ’(a ? c d e) ’(a b c ? e)) should return T.
+(defun matchlelt (l1 l2)
+  "Returns T if corresponding members of L1 and L2 are eql ('? is eql to any element), NIL otherwise"
+  (cond ((null l1) (null l2)) ; terminal condition
+        ((null l2) nil) ; unequal length
+        ((or (eql (first l1) (first l2))
+             (or (dont-care (first l1)) (dont-care (first l2))))
+         (matchlelt (rest l1) (rest l2)))))
